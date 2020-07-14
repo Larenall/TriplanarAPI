@@ -20,13 +20,14 @@ namespace pTriplanar.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<User> Get()
+        [HttpGet("{getEmail}")]
+        public IEnumerable<User> Get(string getEmail)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
+                
                 var _users = db.user_data.ToList();
-                return _users;
+                return _users.Where(el=>el.email == getEmail);
             }
         }
         [HttpPost]
@@ -34,10 +35,25 @@ namespace pTriplanar.Controllers
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                User user1 = new User { id = postuser.id, nickname = postuser.nickname, token = postuser.token, savestring = postuser.savestring};
+                User user1 = new User { id = postuser.id, nickname = postuser.nickname, savestring= postuser.savestring, email=postuser.email };
                 db.user_data.Update(user1);
                 db.SaveChanges();
-                return db.user_data.nickname;
+                return "Posted";
+            }
+
+        }
+        [HttpPatch]
+        public IEnumerable<User> Patch([FromBody] string patchEmail)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var _users = db.user_data.ToList();
+                _users.Where(el => el.email == patchEmail);
+                _users[0].savestring = null;
+                db.user_data.Update(_users[0]);
+                db.SaveChanges();
+                var newList = db.user_data.ToList();
+                return newList.Where(el => el.email == patchEmail);
             }
 
         }
