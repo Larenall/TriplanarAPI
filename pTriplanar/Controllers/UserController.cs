@@ -35,7 +35,7 @@ namespace pTriplanar.Controllers
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                User user1 = new User { id = postuser.id, nickname = postuser.nickname, savestring= postuser.savestring, email=postuser.email };
+                User user1 = new User (postuser.id, postuser.nickname, postuser.savestring, postuser.email);
                 db.user_data.Update(user1);
                 db.SaveChanges();
                 return "Posted";
