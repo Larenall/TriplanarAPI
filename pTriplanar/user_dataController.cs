@@ -13,11 +13,10 @@ namespace pTriplanar
     [ApiController]
     public class user_dataController : ControllerBase
     {
-
         [HttpGet("{getEmail}/{getName}")]
         public void OnLogin(string getEmail, string getName)
         {
-            using (dataVaultContext db = new dataVaultContext())
+            using (postgresContext db = new postgresContext())
             {
                 var userList = db.user_data.ToList();
                 if (userList.Where(el => el.email == getEmail).ToList().Count == 0)
@@ -40,7 +39,7 @@ namespace pTriplanar
         [HttpPatch("update/{getEmail}/{patchName}")]
         public void PatchName(string getEmail, string patchName)
         {
-            using (dataVaultContext db = new dataVaultContext()) {
+            using (postgresContext db = new postgresContext()) {
             var _user = db.user_data.ToList().Where(el => el.email == getEmail).ToList();
             _user[0].nickname = patchName;
             db.user_data.Update(_user[0]);
@@ -50,7 +49,7 @@ namespace pTriplanar
         [HttpPatch]
         public void ResetProgress([FromBody]string getEmail)
         {
-            using (dataVaultContext db = new dataVaultContext())
+            using (postgresContext db = new postgresContext())
             {
                 var _user = db.user_data.ToList().Where(el => el.email == getEmail).ToList()[0];
                 _user.savestring = "";

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace pTriplanar
 {
-    public class game_data
+    public partial class game_descr
     {
         public string description { get; set; }
     }
