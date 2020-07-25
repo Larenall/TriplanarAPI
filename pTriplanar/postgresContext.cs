@@ -165,7 +165,8 @@ namespace pTriplanar
 
             modelBuilder.Entity<user_stats>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.user_id)
+                    .HasName("user_stats_user_id_fkey");
 
                 entity.ToTable("user_stats");
 

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace pTriplanar
 {
+    [Serializable]
     public partial class user_data
     {
         public int user_id { get; set; }

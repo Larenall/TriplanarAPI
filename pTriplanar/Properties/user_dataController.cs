@@ -27,7 +27,9 @@ namespace pTriplanar
                         maxId = Math.Max(maxId, user.user_id);
                     }
                     user_data newUser = new user_data(maxId + 1, getName, getEmail, "");
+                    user_stats newStats = new user_stats(maxId + 1,0,0,0);
                     db.user_data.Add(newUser);
+                    db.user_stats.Add(newStats);
                     db.SaveChanges();
 
                 }
