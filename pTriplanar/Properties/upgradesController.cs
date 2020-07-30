@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using pTriplanar;
+using System.Net;
+using System.Collections.Specialized;
+using System.Net.Http;
 
 namespace pTriplanar.Properties
 {
@@ -13,16 +16,17 @@ namespace pTriplanar.Properties
     [ApiController]
     public class upgradesController : ControllerBase
     {
-        [HttpGet("{upgId}/{upgString}")]
-        public void importUpg(int upgId,string upgString)
+        //[HttpGet("{upgId}/{upgString}")]
+        [HttpPost]
+        public void importUpg(upgrades data)
         {
             using (postgresContext db = new postgresContext())
             {
-                upgrades newUpg = new upgrades { id = upgId, upg_data = upgString };
+                upgrades newUpg = new upgrades { id = data.id, upg_data = data.upg_data };
                 db.upgrades.Add(newUpg);
                 db.SaveChanges();
             }
-
         }
     }
+
 }

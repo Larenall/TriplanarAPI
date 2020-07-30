@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace pTriplanar
 {
     [Route("api/[controller]")]
@@ -14,7 +13,7 @@ namespace pTriplanar
     public class user_dataController : ControllerBase
     {
         [HttpGet("{getEmail}/{getName}")]
-        public void OnLogin(string getEmail, string getName)
+        public string OnLogin(string getEmail, string getName)
         {
             using (postgresContext db = new postgresContext())
             {
@@ -31,11 +30,14 @@ namespace pTriplanar
                     db.user_data.Add(newUser);
                     db.user_stats.Add(newStats);
                     db.SaveChanges();
-
+                    return getName;
                 }
+                return userList.Where(el => el.email == getEmail).ToList()[0].nickname;
             }
-
         }
+
+
+
 
 
         [HttpPatch("update/{getEmail}/{patchName}")]
@@ -61,3 +63,7 @@ namespace pTriplanar
         }
     }
 }
+
+
+    
+
