@@ -25,7 +25,7 @@ namespace pTriplanar
                     {
                         maxId = Math.Max(maxId, user.user_id);
                     }
-                    user_data newUser = new user_data(maxId + 1, getName, getEmail, "");
+                    user_data newUser = new user_data(maxId + 1, getName, getEmail, "0");
                     user_stats newStats = new user_stats(maxId + 1,0,0,0);
                     db.user_data.Add(newUser);
                     db.user_stats.Add(newStats);
@@ -35,8 +35,35 @@ namespace pTriplanar
                 return userList.Where(el => el.email == getEmail).ToList()[0].nickname;
             }
         }
+        [HttpPost("setSave")]
+        public void setSave(Save newSave)
+        {
+            using (postgresContext db = new postgresContext())
+            {
+                var userList = db.user_data.ToList();
+                var user = userList.Where(el => el.email == newSave.email).ToList()[0];
+                user.savestring = newSave.savestring;
+                db.user_data.Update(user);
+                db.SaveChanges();
+            }
+        }
 
-
+        [HttpGet("getSave/{getEmail}")]
+        public string getSave(string getEmail)
+        {
+            using (postgresContext db = new postgresContext())
+            {
+                return db.user_data.ToList().Where(el => el.email == getEmail).ToList()[0].savestring;
+            }
+        }
+        [HttpGet("getId/{getEmail}")]
+        public int getId(string getEmail)
+        {
+            using (postgresContext db = new postgresContext())
+            {
+                return db.user_data.ToList().Where(el => el.email == getEmail).ToList()[0].user_id;
+            }
+        }
 
 
 
@@ -55,9 +82,9 @@ namespace pTriplanar
         {
             using (postgresContext db = new postgresContext())
             {
-                var _user = db.user_data.ToList().Where(el => el.email == getEmail).ToList()[0];
-                _user.savestring = "";
-                db.user_data.Update(_user);
+                var user = db.user_data.ToList().Where(el => el.email == getEmail).ToList()[0];
+                user.savestring = "0";
+                db.user_data.Update(user);
                 db.SaveChanges();
             }
         }

@@ -10,7 +10,6 @@ namespace pTriplanar
         public int maxmatterlvl { get; set; }
         public int maxenergylvl { get; set; }
         public int maxnaturelvl { get; set; }
-
         public virtual user_data User { get; set; }
         public user_stats(int user_id, int maxmatterlvl, int maxenergylvl, int maxnaturelvl)
         {
@@ -18,6 +17,10 @@ namespace pTriplanar
             this.maxmatterlvl = maxmatterlvl;
             this.maxenergylvl = maxenergylvl;
             this.maxnaturelvl = maxnaturelvl;
+        }
+        public user_stats()
+        {
+            
         }
     }
 }

@@ -140,9 +140,10 @@ namespace pTriplanar
 
                 entity.ToTable("upgrades");
 
+                entity.Property(e => e.id).HasColumnName("id");
+
                 entity.Property(e => e.upg_data).HasColumnName("upg_data");
 
-                entity.Property(e => e.id).HasColumnName("id");
             });
 
             modelBuilder.Entity<user_data>(entity =>
