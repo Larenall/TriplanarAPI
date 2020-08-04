@@ -84,6 +84,11 @@ namespace pTriplanar
             {
                 var user = db.user_data.ToList().Where(el => el.email == getEmail).ToList()[0];
                 user.savestring = "0";
+                var userStats = db.user_stats.ToList().Where(el => el.user_id == user.user_id).ToList()[0];
+                userStats.maxenergylvl = 0;
+                userStats.maxmatterlvl = 0;
+                userStats.maxnaturelvl = 0;
+                db.user_stats.Update(userStats);
                 db.user_data.Update(user);
                 db.SaveChanges();
             }
